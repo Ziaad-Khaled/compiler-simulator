@@ -1,17 +1,17 @@
 package csen1002.main.task2;
 
 public class TransitionPair implements Comparable<TransitionPair>{
-    char transition;
+    char symbol;
     State target;
 
     public TransitionPair(char transition, State target)
     {
-        this.transition = transition;
+        this.symbol = transition;
         this.target = target;
     }
 
-    public char getTransition() {
-        return transition;
+    public char getSymbol() {
+        return symbol;
     }
 
     public State getTarget() {
@@ -25,7 +25,7 @@ public class TransitionPair implements Comparable<TransitionPair>{
 
     @Override
     public String toString() {
-        return "transition=" + transition +
+        return "transition=" + symbol +
                 ", target=" + target.getStateNumber();
     }
 
