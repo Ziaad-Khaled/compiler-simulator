@@ -190,3 +190,100 @@ public class FallbackDfa {
 		return output.substring(0, output.length()-1);
 	}
 }
+
+class OutputPair {
+	int state;
+	String output;
+
+	public OutputPair(int state, String output)
+	{
+		this.state = state;
+		this.output = output;
+	}
+
+	@Override
+	public String toString() {
+		return output + "," + state;
+	}
+}
+
+class State {
+
+
+	private int stateNumber;
+	private ArrayList<TransitionPair> transitionPairs;
+
+	public State(int stateNumber)
+	{
+		this.stateNumber = stateNumber;
+		transitionPairs = new ArrayList<>();
+	}
+
+	public void createATransition(char symbol, State target)
+	{
+		TransitionPair transitionPair = new TransitionPair(symbol, target);
+		transitionPairs.add(transitionPair);
+	}
+
+	public int getTarget(char transition)
+	{
+		for(int i=0; i< transitionPairs.size();i++)
+		{
+			if(transition == transitionPairs.get(i).getSymbol())
+			{
+				return transitionPairs.get(i).getTargetNumber();
+			}
+		}
+		return -1;
+	}
+
+	public int getStateNumber() {
+		return stateNumber;
+	}
+
+	public ArrayList<TransitionPair> getTransitionPairs() {
+		return transitionPairs;
+	}
+
+	@Override
+	public String toString() {
+		return "transitionPairs=" + transitionPairs;
+	}
+}
+
+class TransitionPair implements Comparable<TransitionPair>{
+	char symbol;
+	State target;
+
+	public TransitionPair(char transition, State target)
+	{
+		this.symbol = transition;
+		this.target = target;
+	}
+
+	public char getSymbol() {
+		return symbol;
+	}
+
+	public State getTarget() {
+		return target;
+	}
+
+	public int getTargetNumber()
+	{
+		return target.getStateNumber();
+	}
+
+	@Override
+	public String toString() {
+		return "transition=" + symbol +
+				", target=" + target.getStateNumber();
+	}
+
+	@Override
+	public int compareTo(TransitionPair other) {
+		return Integer.compare(this.target.getStateNumber(), other.target.getStateNumber());
+	}
+}
+
+

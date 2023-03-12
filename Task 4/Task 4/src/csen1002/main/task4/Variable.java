@@ -75,16 +75,21 @@ public class Variable {
             if(isUnit(variableName))
             {
                 changed = true;
-                rules.remove(variableName);
-                eliminatedUnitRules.add(variableName.charAt(0));
-                Variable variable = cfgEpsUnitElim.getVariableByName(variableName.charAt(0));
-                HashSet<String> newRules = variable.getRules();
-                rules.addAll(newRules);
-                checkIfContainsElimintatedUnitRule();
+                eliminateOneUnitRule(variableName);
             }
         }
 
         return changed;
+    }
+
+    private void eliminateOneUnitRule(String variableName)
+    {
+        rules.remove(variableName);
+        eliminatedUnitRules.add(variableName.charAt(0));
+        Variable variable = cfgEpsUnitElim.getVariableByName(variableName.charAt(0));
+        HashSet<String> newRules = variable.getRules();
+        rules.addAll(newRules);
+        checkIfContainsElimintatedUnitRule();
     }
 
     private void checkIfContainsElimintatedUnitRule() {
