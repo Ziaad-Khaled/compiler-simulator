@@ -14,92 +14,77 @@ import csen1002.main.task4.CfgEpsUnitElim;
 public class Task4TestsBatch0 {
 
 	@Test
-	public void testCfgEpsilonRuleElimination0() {
-		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;A;B;C#a;b;c;d;x#S/aAb,xB;A/Bc,C,c,d;B/CACA,e;C/A,b,e");
-		cfgEpsUnitElim.eliminateEpsilonRules();
-		assertEquals("S;A;B;C#a;b;c;d;x#S/aAb,ab,x,xB;A/Bc,C,c,d;B/A,AA,AC,ACA,C,CA,CAA,CAC,CACA,CC,CCA;C/A,b", cfgEpsUnitElim.toString());
-	}
-
-	@Test
 	public void testCfgEpsilonRuleElimination1() {
-		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;H;R;V;N;G#b;u;v;z#S/V,uNbSu,vNz;H/R,VS,e,uSV;R/SuNv,Sz,e,v,vSb;V/H,b,vGSbS;N/H,S,e,zHH,zHRvV,zNSGH;G/S,uVuS");
+		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;O;T;A;K;V#c;g;h;s;t#S/gAVA,tOKh;O/A,SsOAO,T,V,e,tVVO;T/A,KTVK,e;A/AThO,K,OSc,S,SOKt,TtTOs;K/A,AgTSs,V,e,gOOO;V/KVKK,cTA");
 		cfgEpsUnitElim.eliminateEpsilonRules();
-		assertEquals("S;H;R;V;N;G#b;u;v;z#S/V,uNbSu,uNbu,ubSu,ubu,vNz,vz;H/R,S,V,VS,u,uS,uSV,uV;R/SuNv,Suv,Sz,uNv,uv,v,vSb,vb,z;V/H,b,vGSb,vGSbS,vGb,vGbS,vSb,vSbS,vb,vbS;N/H,S,z,zG,zGH,zH,zHH,zHRv,zHRvV,zHv,zHvV,zN,zNG,zNGH,zNH,zNS,zNSG,zNSGH,zNSH,zRv,zRvV,zS,zSG,zSGH,zSH,zv,zvV;G/S,uVu,uVuS,uu,uuS", cfgEpsUnitElim.toString());
+		assertEquals("S;O;T;A;K;V#c;g;h;s;t#S/gAV,gAVA,gV,gVA,tKh,tOKh,tOh,th;O/A,Ss,SsA,SsAO,SsO,SsOA,SsOAO,SsOO,T,V,tVV,tVVO;T/A,KTV,KTVK,KV,KVK,TV,TVK,V,VK;A/ATh,AThO,Ah,AhO,K,OSc,S,SKt,SOKt,SOt,Sc,St,Th,ThO,TtOs,TtTOs,TtTs,Tts,h,hO,tOs,tTOs,tTs,ts;K/A,AgSs,AgTSs,V,g,gO,gOO,gOOO,gSs,gTSs;V/KV,KVK,KVKK,V,VK,VKK,c,cA,cT,cTA", cfgEpsUnitElim.toString());
 	}
 
 	@Test
 	public void testCfgEpsilonRuleElimination2() {
-		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;N;O;X;A#l;m;u;w;z#S/AAXz,NlO,OOuNX,SzO;N/S,SAmAu,X,e,lX;O/N,OSO,S,XOlNN,e,zS;X/X,XOuA,e,wS;A/AlS,Oz,uNlAm");
+		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;J;W;L;Q;G;D#l;o;u;x#S/D,x,xWl;J/J,JWG,L,SoLSQ,WxDo,e;W/J,SLJ,e,lD,x,xGJ;L/G,GxQQ,S,o;Q/GDQo,Lo,S,lQWGu;G/L,lQ,o,xSJQG;D/WJJQ,oG,xG");
 		cfgEpsUnitElim.eliminateEpsilonRules();
-		assertEquals("S;N;O;X;A#l;m;u;w;z#S/AAXz,AAz,Nl,NlO,OOu,OOuN,OOuNX,OOuX,Ou,OuN,OuNX,OuX,Sz,SzO,l,lO,u,uN,uNX,uX;N/S,SAmAu,X,l,lX;O/N,OS,OSO,Ol,OlN,OlNN,S,SO,XOl,XOlN,XOlNN,Xl,XlN,XlNN,l,lN,lNN,zS;X/OuA,X,XOuA,XuA,uA,wS;A/AlS,Oz,uNlAm,ulAm,z", cfgEpsUnitElim.toString());
+		assertEquals("S;J;W;L;Q;G;D#l;o;u;x#S/D,x,xWl,xl;J/G,J,JG,JWG,L,SoLSQ,WG,WxDo,xDo;W/J,SL,SLJ,lD,x,xG,xGJ;L/G,GxQQ,S,o;Q/GDQo,Lo,S,lQGu,lQWGu;G/L,lQ,o,xSJQG,xSQG;D/JJQ,JQ,Q,WJJQ,WJQ,WQ,oG,xG", cfgEpsUnitElim.toString());
 	}
 
 	@Test
 	public void testCfgEpsilonRuleElimination3() {
-		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;Z;T;K;N;L;W#i;k;p;q;w#S/LZ,ZkKiS,kSS;Z/KLW,N,wKSZK;T/TNZ,p;K/L,WWw,e,pZqWN;N/S,SKk,Z,kZ,p;L/SLL,TKLw,WZWq,e,wZ;W/SKLpW,wTL");
+		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;X;C;B;Z;H;M#a;d;h;t;x#S/BM,Hd,S,ShSdC,xBx;X/Bt,CBtXH,d,e,x;C/e,tBhMt,xXZtX;B/S,e,xHMBC;Z/B,MaB,SC,SSMd,aSCCH;H/H,Sx,a,tXaCS;M/BXZBS,BhCdZ,ZStH,tHx");
 		cfgEpsUnitElim.eliminateEpsilonRules();
-		assertEquals("S;Z;T;K;N;L;W#i;k;p;q;w#S/LZ,Z,ZkKiS,ZkiS,kSS;Z/KLW,KW,LW,N,W,wKSZ,wKSZK,wSZ,wSZK;T/TNZ,p;K/L,WWw,pZqWN;N/S,SKk,Sk,Z,kZ,p;L/S,SL,SLL,TKLw,TKw,TLw,Tw,WZWq,wZ;W/SKLpW,SKpW,SLpW,SpW,wT,wTL", cfgEpsUnitElim.toString());
-	}
-
-
-	@Test
-	public void testCfgUnitRuleElimination0() {
-		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;A;B;C#a;b;c;d;x#S/aAb,xB;A/Bc,C,c,d;B/CACA,e;C/A,b,e");
-		cfgEpsUnitElim.eliminateUnitRules();
-		assertEquals("S;A;B;C#a;b;c;d;x#S/aAb,xB;A/Bc,b,c,d,e;B/CACA,e;C/Bc,b,c,d,e", cfgEpsUnitElim.toString());
+		assertEquals("S;X;C;B;Z;H;M#a;d;h;t;x#S/BM,Hd,M,S,ShSd,ShSdC,xBx,xx;X/Bt,BtH,BtXH,CBtH,CBtXH,CtH,CtXH,d,t,tH,tXH,x;C/tBhMt,thMt,xXZt,xXZtX,xXt,xXtX,xZt,xZtX,xt,xtX;B/S,xHM,xHMB,xHMBC,xHMC;Z/B,Ma,MaB,S,SC,SSMd,aSCCH,aSCH,aSH;H/H,Sx,a,tXaCS,tXaS,taCS,taS;M/BBS,BS,BXBS,BXS,BXZBS,BXZS,BZBS,BZS,BhCd,BhCdZ,Bhd,BhdZ,S,StH,XBS,XS,XZBS,XZS,ZBS,ZS,ZStH,hCd,hCdZ,hd,hdZ,tHx", cfgEpsUnitElim.toString());
 	}
 
 	@Test
 	public void testCfgUnitRuleElimination1() {
-		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;V;Y;R;P;N#g;p;q;x;z#S/NRS,S,pSzR,xV;V/P,PYg,VYSx;Y/NNqNY,P,VVYYx,qRxS,qVx;R/P,PPNY,gRN,z;P/NVp,PzVN,RNVp,Y;N/NSp,Y");
+		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;D;M;T;H;J;Z#f;l;z#S/H,HDlH,J,fMlMl,zZzHZ;D/D,JzSzZ,M,MzTlM;M/D,H,TfH;T/DlZS,M;H/MHz,zDHS,zDJZz;J/D,H,SHTD,TfDzZ;Z/SlJSH,lSfS");
 		cfgEpsUnitElim.eliminateUnitRules();
-		assertEquals("S;V;Y;R;P;N#g;p;q;x;z#S/NRS,pSzR,xV;V/NNqNY,NVp,PYg,PzVN,RNVp,VVYYx,VYSx,qRxS,qVx;Y/NNqNY,NVp,PzVN,RNVp,VVYYx,qRxS,qVx;R/NNqNY,NVp,PPNY,PzVN,RNVp,VVYYx,gRN,qRxS,qVx,z;P/NNqNY,NVp,PzVN,RNVp,VVYYx,qRxS,qVx;N/NNqNY,NSp,NVp,PzVN,RNVp,VVYYx,qRxS,qVx", cfgEpsUnitElim.toString());
+		assertEquals("S;D;M;T;H;J;Z#f;l;z#S/HDlH,JzSzZ,MHz,MzTlM,SHTD,TfDzZ,TfH,fMlMl,zDHS,zDJZz,zZzHZ;D/JzSzZ,MHz,MzTlM,TfH,zDHS,zDJZz;M/JzSzZ,MHz,MzTlM,TfH,zDHS,zDJZz;T/DlZS,JzSzZ,MHz,MzTlM,TfH,zDHS,zDJZz;H/MHz,zDHS,zDJZz;J/JzSzZ,MHz,MzTlM,SHTD,TfDzZ,TfH,zDHS,zDJZz;Z/SlJSH,lSfS", cfgEpsUnitElim.toString());
 	}
 
 	@Test
 	public void testCfgUnitRuleElimination2() {
-		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;X;P;C;Q#a;b;k;t#S/CaPP,P,tXSP;X/Pb,QSa,XX;P/CPbPS,P,PQa,Q,S;C/Q,S,b;Q/SXXkC,SaPk,kXSk,t");
+		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;V;I;F;Q;T;X#g;l;s#S/T,VVl,g,gXVX;V/Q,QFX,SSs,T,V,VXX;I/S,SsQsS,sXVlX;F/TVTXX,XlTT,lIIQg,sSsIl;Q/TVQ,s;T/lVlIF,sTFF,sTl;X/TFIgV,l,lFsXl,sS");
 		cfgEpsUnitElim.eliminateUnitRules();
-		assertEquals("S;X;P;C;Q#a;b;k;t#S/CPbPS,CaPP,PQa,SXXkC,SaPk,kXSk,t,tXSP;X/Pb,QSa,XX;P/CPbPS,CaPP,PQa,SXXkC,SaPk,kXSk,t,tXSP;C/CPbPS,CaPP,PQa,SXXkC,SaPk,b,kXSk,t,tXSP;Q/SXXkC,SaPk,kXSk,t", cfgEpsUnitElim.toString());
+		assertEquals("S;V;I;F;Q;T;X#g;l;s#S/VVl,g,gXVX,lVlIF,sTFF,sTl;V/QFX,SSs,TVQ,VXX,lVlIF,s,sTFF,sTl;I/SsQsS,VVl,g,gXVX,lVlIF,sTFF,sTl,sXVlX;F/TVTXX,XlTT,lIIQg,sSsIl;Q/TVQ,s;T/lVlIF,sTFF,sTl;X/TFIgV,l,lFsXl,sS", cfgEpsUnitElim.toString());
 	}
 
 	@Test
 	public void testCfgUnitRuleElimination3() {
-		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;M;P;G;B;I;X#b;j;o;p#S/oPBbM,pMXBp;M/GjMX,I,oMB;P/B,G,ISIbI,M,XPo,jIbI;G/SSBI,o,pISM;B/GGIS,MMIBb,P,SGjG,j;I/BpPo,M;X/GX,MPP");
+		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;J;E;M;A;D#b;n;q#S/AbDqD,DAJAb,J,nEbJ;J/A,DbSbS,EqD,JDSJ;E/EJb,bJAnA;M/MnSJJ,nESJ,nMn;A/DSbE,M,nASb;D/DAMb,DD");
 		cfgEpsUnitElim.eliminateUnitRules();
-		assertEquals("S;M;P;G;B;I;X#b;j;o;p#S/oPBbM,pMXBp;M/BpPo,GjMX,oMB;P/BpPo,GGIS,GjMX,ISIbI,MMIBb,SGjG,SSBI,XPo,j,jIbI,o,oMB,pISM;G/SSBI,o,pISM;B/BpPo,GGIS,GjMX,ISIbI,MMIBb,SGjG,SSBI,XPo,j,jIbI,o,oMB,pISM;I/BpPo,GjMX,oMB;X/GX,MPP", cfgEpsUnitElim.toString());
+		assertEquals("S;J;E;M;A;D#b;n;q#S/AbDqD,DAJAb,DSbE,DbSbS,EqD,JDSJ,MnSJJ,nASb,nESJ,nEbJ,nMn;J/DSbE,DbSbS,EqD,JDSJ,MnSJJ,nASb,nESJ,nMn;E/EJb,bJAnA;M/MnSJJ,nESJ,nMn;A/DSbE,MnSJJ,nASb,nESJ,nMn;D/DAMb,DD", cfgEpsUnitElim.toString());
 	}
 
 	@Test
 	public void testCfgEpsilonUnitRuleElimination1() {
-		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;E;Q;Y;I;H;C#a;i;n;x#S/E,HSxI,Q,n;E/C,Q,Y,YQICC,i;Q/SCnYx,i,n,xI;Y/E,QiYCY,SxHS,xHHHQ;I/Q,Y,aCEY,e,xCnYS;H/I,IxSx,aS,e;C/H,Q,aE");
+		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;A;E;C;O#d;g;l#S/C,S,SCdA,SlOAO,l;A/CdCS,SlOCA,dA,dCEgS,e;E/A,C,E,O,S,e,l;C/dCE,gCl;O/dOg,lOA");
 		cfgEpsUnitElim.eliminateEpsilonRules();
 		cfgEpsUnitElim.eliminateUnitRules();
-		assertEquals("S;E;Q;Y;I;H;C#a;i;n;x#S/CnYx,Cnx,HSx,HSxI,Hx,HxI,IxSx,Ixx,QC,QCC,QI,QIC,QICC,Qi,QiC,QiCY,QiY,QiYC,QiYCY,QiYY,SCnYx,SCnx,SnYx,Snx,Sx,SxH,SxHS,SxI,SxS,YQ,YQC,YQCC,YQI,YQIC,YQICC,a,aC,aCE,aCEY,aCY,aE,aEY,aS,aY,i,n,nYx,nx,x,xCn,xCnS,xCnY,xCnYS,xH,xHHHQ,xHHQ,xHQ,xHS,xI,xQ,xS,xSx,xn,xnS,xnY,xnYS,xx;E/CnYx,Cnx,IxSx,Ixx,QC,QCC,QI,QIC,QICC,Qi,QiC,QiCY,QiY,QiYC,QiYCY,QiYY,SCnYx,SCnx,SnYx,Snx,Sx,SxH,SxHS,SxS,YQ,YQC,YQCC,YQI,YQIC,YQICC,a,aC,aCE,aCEY,aCY,aE,aEY,aS,aY,i,n,nYx,nx,x,xCn,xCnS,xCnY,xCnYS,xH,xHHHQ,xHHQ,xHQ,xHS,xI,xQ,xS,xSx,xn,xnS,xnY,xnYS,xx;Q/CnYx,Cnx,SCnYx,SCnx,SnYx,Snx,i,n,nYx,nx,x,xI;Y/CnYx,Cnx,IxSx,Ixx,QC,QCC,QI,QIC,QICC,Qi,QiC,QiCY,QiY,QiYC,QiYCY,QiYY,SCnYx,SCnx,SnYx,Snx,Sx,SxH,SxHS,SxS,YQ,YQC,YQCC,YQI,YQIC,YQICC,a,aC,aCE,aCEY,aCY,aE,aEY,aS,aY,i,n,nYx,nx,x,xCn,xCnS,xCnY,xCnYS,xH,xHHHQ,xHHQ,xHQ,xHS,xI,xQ,xS,xSx,xn,xnS,xnY,xnYS,xx;I/CnYx,Cnx,IxSx,Ixx,QC,QCC,QI,QIC,QICC,Qi,QiC,QiCY,QiY,QiYC,QiYCY,QiYY,SCnYx,SCnx,SnYx,Snx,Sx,SxH,SxHS,SxS,YQ,YQC,YQCC,YQI,YQIC,YQICC,a,aC,aCE,aCEY,aCY,aE,aEY,aS,aY,i,n,nYx,nx,x,xCn,xCnS,xCnY,xCnYS,xH,xHHHQ,xHHQ,xHQ,xHS,xI,xQ,xS,xSx,xn,xnS,xnY,xnYS,xx;H/CnYx,Cnx,IxSx,Ixx,QC,QCC,QI,QIC,QICC,Qi,QiC,QiCY,QiY,QiYC,QiYCY,QiYY,SCnYx,SCnx,SnYx,Snx,Sx,SxH,SxHS,SxS,YQ,YQC,YQCC,YQI,YQIC,YQICC,a,aC,aCE,aCEY,aCY,aE,aEY,aS,aY,i,n,nYx,nx,x,xCn,xCnS,xCnY,xCnYS,xH,xHHHQ,xHHQ,xHQ,xHS,xI,xQ,xS,xSx,xn,xnS,xnY,xnYS,xx;C/CnYx,Cnx,IxSx,Ixx,QC,QCC,QI,QIC,QICC,Qi,QiC,QiCY,QiY,QiYC,QiYCY,QiYY,SCnYx,SCnx,SnYx,Snx,Sx,SxH,SxHS,SxS,YQ,YQC,YQCC,YQI,YQIC,YQICC,a,aC,aCE,aCEY,aCY,aE,aEY,aS,aY,i,n,nYx,nx,x,xCn,xCnS,xCnY,xCnYS,xH,xHHHQ,xHHQ,xHQ,xHS,xI,xQ,xS,xSx,xn,xnS,xnY,xnYS,xx", cfgEpsUnitElim.toString());
+		assertEquals("S;A;E;C;O#d;g;l#S/SCd,SCdA,SlOAO,SlOO,dC,dCE,gCl,l;A/CdCS,SlOC,SlOCA,d,dA,dCEgS,dCgS;E/CdCS,SCd,SCdA,SlOAO,SlOC,SlOCA,SlOO,d,dA,dC,dCE,dCEgS,dCgS,dOg,gCl,l,lO,lOA;C/dC,dCE,gCl;O/dOg,lO,lOA", cfgEpsUnitElim.toString());
 	}
 
 	@Test
 	public void testCfgEpsilonUnitRuleElimination2() {
-		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;N;G;O;D;X#a;d;w#S/DS,GdOSO,aDd;N/Gw,NGODw,O,S;G/O,dXSO,e,wX;O/NG,NwDd,OSG,SDwO,e;D/G,S,XwOaS;X/SaG,aNNaO,dOD");
+		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;R;X;A;C#d;l;n;o#S/Xo,nRXlX,nSoS;R/A,CX,X,e,lCS,lXXXo;X/A,AdRX,dCR,e;A/X,XR,e,nCd;C/CoAo,n,nR");
 		cfgEpsUnitElim.eliminateEpsilonRules();
 		cfgEpsUnitElim.eliminateUnitRules();
-		assertEquals("S;N;G;O;D;X#a;d;w#S/DS,GdOS,GdOSO,GdS,GdSO,aDd,ad,dOS,dOSO,dS,dSO;N/DS,Dw,GDw,GODw,GOw,GdOS,GdOSO,GdS,GdSO,Gw,NDw,NG,NGDw,NGODw,NGOw,NGw,NODw,NOw,Nw,NwDd,Nwd,ODw,OS,OSG,Ow,SDw,SDwO,SG,Sw,SwO,aDd,ad,dOS,dOSO,dS,dSO,dXS,dXSO,w,wDd,wX,wd;G/DS,Dw,GDw,GODw,GOw,GdOS,GdOSO,GdS,GdSO,Gw,NDw,NG,NGDw,NGODw,NGOw,NGw,NODw,NOw,Nw,NwDd,Nwd,ODw,OS,OSG,Ow,SDw,SDwO,SG,Sw,SwO,aDd,ad,dOS,dOSO,dS,dSO,dXS,dXSO,w,wDd,wX,wd;O/DS,Dw,GDw,GODw,GOw,GdOS,GdOSO,GdS,GdSO,Gw,NDw,NG,NGDw,NGODw,NGOw,NGw,NODw,NOw,Nw,NwDd,Nwd,ODw,OS,OSG,Ow,SDw,SDwO,SG,Sw,SwO,aDd,ad,dOS,dOSO,dS,dSO,dXS,dXSO,w,wDd,wX,wd;D/DS,Dw,GDw,GODw,GOw,GdOS,GdOSO,GdS,GdSO,Gw,NDw,NG,NGDw,NGODw,NGOw,NGw,NODw,NOw,Nw,NwDd,Nwd,ODw,OS,OSG,Ow,SDw,SDwO,SG,Sw,SwO,XwOaS,XwaS,aDd,ad,dOS,dOSO,dS,dSO,dXS,dXSO,w,wDd,wX,wd;X/Sa,SaG,aNNa,aNNaO,aNa,aNaO,aa,aaO,d,dD,dO,dOD", cfgEpsUnitElim.toString());
+		assertEquals("S;R;X;A;C#d;l;n;o#S/Xo,nRXl,nRXlX,nRl,nRlX,nSoS,nXl,nXlX,nl,nlX,o;R/Ad,AdR,AdRX,AdX,CX,CoAo,Coo,XR,d,dC,dCR,dR,dRX,dX,lCS,lXXXo,lXXo,lXo,lo,n,nCd,nR;X/Ad,AdR,AdRX,AdX,CX,CoAo,Coo,XR,d,dC,dCR,dR,dRX,dX,lCS,lXXXo,lXXo,lXo,lo,n,nCd,nR;A/Ad,AdR,AdRX,AdX,CX,CoAo,Coo,XR,d,dC,dCR,dR,dRX,dX,lCS,lXXXo,lXXo,lXo,lo,n,nCd,nR;C/CoAo,Coo,n,nR", cfgEpsUnitElim.toString());
 	}
 
 	@Test
 	public void testCfgEpsilonUnitRuleElimination3() {
-		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;H;W;J;Q;L#h;q;y#S/Ly,QQhQ,S,W,WWyJ,qJL;H/QLLJW,e,q;W/SSJq,SyJhL,W;J/JHqHJ,JyLW,W,e;Q/Q,S,ShL,Wq,e,qW;L/HJHJy,SS,Sy,yJHyS");
+		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;H;N;K;O;Z;F#c;f;q;x#S/cOfO,cZ,xScOF;H/K,O,SxK,e,fSNq,x;N/KZc,Z,f,xOFc;K/cN,q;O/Nx,O,e,fNOc,qSSx;Z/HZq,K,O,e,xHc;F/FqZ,NNS,cHNH,xS");
 		cfgEpsUnitElim.eliminateEpsilonRules();
 		cfgEpsUnitElim.eliminateUnitRules();
-		assertEquals("S;H;W;J;Q;L#h;q;y#S/Ly,QQh,QQhQ,Qh,QhQ,SSJq,SSq,SyJhL,SyhL,WWy,WWyJ,h,hQ,qJL,qL;H/LLJW,LLW,QLLJW,QLLW,q;W/SSJq,SSq,SyJhL,SyhL;J/Hq,HqH,HqHJ,HqJ,JHq,JHqH,JHqHJ,JHqJ,Jq,JqH,JqHJ,JqJ,JyLW,SSJq,SSq,SyJhL,SyhL,q,qH,qHJ,qJ,yLW;Q/Ly,QQh,QQhQ,Qh,QhQ,SSJq,SSq,ShL,SyJhL,SyhL,WWy,WWyJ,Wq,h,hQ,qJL,qL,qW;L/HHJy,HHy,HJHJy,HJHy,HJJy,HJy,Hy,JHJy,JHy,JJy,Jy,SS,Sy,y,yHyS,yJHyS,yJyS,yyS", cfgEpsUnitElim.toString());
+		assertEquals("S;H;N;K;O;Z;F#c;f;q;x#S/c,cOf,cOfO,cZ,cf,cfO,xScF,xScOF;H/Nx,SxK,c,cN,fNOc,fNc,fOc,fSNq,fSq,fc,q,qSSx,x;N/HZq,Hq,KZc,Kc,Nx,Zq,c,cN,f,fNOc,fNc,fOc,fc,q,qSSx,x,xFc,xHc,xOFc,xc;K/c,cN,q;O/Nx,fNOc,fNc,fOc,fc,qSSx,x;Z/HZq,Hq,Nx,Zq,c,cN,fNOc,fNc,fOc,fc,q,qSSx,x,xHc,xc;F/Fq,FqZ,NNS,NS,c,cH,cHH,cHN,cHNH,cN,cNH,cOf,cOfO,cZ,cf,cfO,xS,xScF,xScOF", cfgEpsUnitElim.toString());
 	}
 
 	@Test
 	public void testCfgEpsilonUnitRuleElimination4() {
-		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;W;T;X;F#a;c;d;m;p#S/FcW,XpS,d;W/T,WdX,aW,e,mSWS;T/S,STc,T,X,XmXp,e;X/WWFc,X,mXWT;F/W,p");
+		CfgEpsUnitElim cfgEpsUnitElim= new CfgEpsUnitElim("S;G;F;B;W;J#h;j;x;y#S/GxG,S,hFhS,x;G/WSh,e,jShW;F/J,JyGW,x,yJ;B/FW,SSS,e;W/B,G,S,W,WJhG,e,xBFWS;J/hFxFj,hGBj,x");
 		cfgEpsUnitElim.eliminateEpsilonRules();
 		cfgEpsUnitElim.eliminateUnitRules();
-		assertEquals("S;W;T;X;F#a;c;d;m;p#S/Fc,FcW,XpS,c,cW,d;W/Fc,FcW,STc,Sc,WFc,WWFc,WWc,Wc,WdX,XmXp,XpS,a,aW,c,cW,d,dX,mSS,mSWS,mX,mXT,mXW,mXWT;T/Fc,FcW,STc,Sc,WFc,WWFc,WWc,Wc,XmXp,XpS,c,cW,d,mX,mXT,mXW,mXWT;X/Fc,WFc,WWFc,WWc,Wc,c,mX,mXT,mXW,mXWT;F/Fc,FcW,STc,Sc,WFc,WWFc,WWc,Wc,WdX,XmXp,XpS,a,aW,c,cW,d,dX,mSS,mSWS,mX,mXT,mXW,mXWT,p", cfgEpsUnitElim.toString());
+		assertEquals("S;G;F;B;W;J#h;j;x;y#S/Gx,GxG,hFhS,x,xG;G/Sh,WSh,jSh,jShW;F/Jy,JyG,JyGW,JyW,hBj,hFxFj,hGBj,hGj,hj,x,yJ;B/FW,Jy,JyG,JyGW,JyW,SSS,hBj,hFxFj,hGBj,hGj,hj,x,yJ;W/FW,Gx,GxG,Jh,JhG,Jy,JyG,JyGW,JyW,SSS,Sh,WJh,WJhG,WSh,hBj,hFhS,hFxFj,hGBj,hGj,hj,jSh,jShW,x,xBFS,xBFWS,xFS,xFWS,xG,yJ;J/hBj,hFxFj,hGBj,hGj,hj,x", cfgEpsUnitElim.toString());
 	}
 
 }
