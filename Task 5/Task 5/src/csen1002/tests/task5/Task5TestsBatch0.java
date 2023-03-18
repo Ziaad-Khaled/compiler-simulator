@@ -13,6 +13,14 @@ import csen1002.main.task5.CfgLeftRecElim;
 @Timeout(value = 5, unit = TimeUnit.SECONDS, threadMode = ThreadMode.SEPARATE_THREAD)
 public class Task5TestsBatch0 {
 
+
+	@Test
+	public void testCfgLeftRecursionElimination0() {
+		CfgLeftRecElim cfgLeftRecElim= new CfgLeftRecElim("S;T;L#a;b;c;d;i#S/ScT,La,Ti,b;T/aSb,LabS,i;L/SdL,Si");
+		cfgLeftRecElim.eliminateLeftRecursion();
+		assertEquals("S;T;L;S';L'#a;b;c;d;i#S/LaS',TiS',bS';T/aSb,LabS,i;L/aSbiS'dLL',iiS'dLL',bS'dLL',aSbiS'iL',iiS'iL',bS'iL';S'/cTS',e;L'/aS'dLL',abSiS'dLL',aS'iL',abSiS'iL',e", cfgLeftRecElim.toString());
+	}
+
 	@Test
 	public void testCfgLeftRecursionElimination1() {
 		CfgLeftRecElim cfgLeftRecElim= new CfgLeftRecElim("S;D;G;L;T;R#b;f;i;y;z#S/DyRTT,TDRS,TzLR,f;D/TSTDG,fGTT;G/GSDLb,GyLR,fDf,yLT;L/DGDL,GSbS,LLf,LS,f;T/LLSy,RbGG,TfTTi,bSLL;R/DD,DLTLi,fTDfL");
