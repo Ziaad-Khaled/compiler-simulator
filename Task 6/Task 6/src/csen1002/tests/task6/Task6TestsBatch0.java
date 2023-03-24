@@ -14,6 +14,18 @@ import csen1002.main.task6.CfgFirstFollow;
 public class Task6TestsBatch0 {
 
 	@Test
+	public void testCfg0First() {
+		CfgFirstFollow cfgFirstFollow= new CfgFirstFollow("S;T;L#a;b;c;d;i#S/ScT,T;T/aSb,iaLb,e;L/SdL,S");
+		assertEquals("S/acei;T/aei;L/acdei", cfgFirstFollow.first());
+	}
+
+	@Test
+	public void testCfg0Follow() {
+		CfgFirstFollow cfgFirstFollow= new CfgFirstFollow("S;T;L#a;b;c;d;i#S/ScT,T;T/aSb,iaLb,e;L/SdL,S");
+		assertEquals("S/$bcd;T/$bcd;L/b", cfgFirstFollow.follow());
+	}
+
+	@Test
 	public void testCfg1First() {
 		CfgFirstFollow cfgFirstFollow= new CfgFirstFollow("S;Z;I;P;B;J;W#b;f;i;m;n;p;s#S/PZb,S,iBbB;Z/II,If,P;I/B,JZPP,SPnJS,SWsI,bBPb,iB;P/JWWfP,S,Ss,e;B/e,pBPBb,sSP;J/BmPZ,Z,iP;W/bZ,mPnWb,pWBfB");
 		assertEquals("S/bfimps;Z/befimps;I/befimps;P/befimps;B/eps;J/befimps;W/bmp", cfgFirstFollow.first());
@@ -52,7 +64,7 @@ public class Task6TestsBatch0 {
 	@Test
 	public void testCfg4First() {
 		CfgFirstFollow cfgFirstFollow= new CfgFirstFollow("S;K;D;I;M;L#a;d;g;x;y#S/L,S,SDxS;K/D,Ly,gMgSK;D/K,KdL,e,gIxLS;I/DgS,K,S,SaS,aDSI,aDSL,gSyL;M/D,DIaIM,IIdMS,e,x;L/SaDL,SgDL,xDaDg");
-		assertEquals("S/x;K/degx;D/degx;I/adegx;M/adegx;L/x", cfgFirstFollow.first());
+ 		assertEquals("S/x;K/degx;D/degx;I/adegx;M/adegx;L/x", cfgFirstFollow.first());
 	}
 	
 	@Test

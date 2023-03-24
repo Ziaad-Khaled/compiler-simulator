@@ -73,9 +73,43 @@ public class CfgFirstFollow {
 	 *         formatted as specified in the task description.
 	 */
 	public String first() {
-		// TODO Auto-generated method stub
-		return null;
+		boolean change = true;
+		while(change)
+		{
+			change = false;
+			for(int i=0;i< variables.size();i++)
+			{
+				Variable variable = variables.get(i);
+				boolean ruleAdded = variable.assignFirst();
+				if(ruleAdded)
+					change = true;
+				System.out.println(variable.getName());
+				System.out.println(variable.getFirst());
+				System.out.println("#################");
+			}
+			System.out.println("$$$$$$$$$$");
+		}
+
+		return firstToString();
 	}
+
+	private String firstToString() {
+		String output = "";
+		for(int i=0;i<variables.size();i++)
+		{
+			Variable variable = variables.get(i);
+			output += variable.getName();
+			output += "/";
+			output += variable.firstToString();
+			output += ";";
+		}
+
+		if(output.charAt(output.length()-1) == ';')
+			output = output.substring(0, output.length() - 1);
+
+		return output;
+	}
+
 
 	/**
 	 * Calculates the Follow Set of each variable in the CFG.
