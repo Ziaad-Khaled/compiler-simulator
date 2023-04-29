@@ -14,32 +14,38 @@ import csen1002.main.task7.CfgLl1Parser;
 public class Task7TestsBatch0 {
 
 	@Test
+	public void testCfg0String1() {
+		CfgLl1Parser cfgLl1Parser= new CfgLl1Parser("S;T#a;c;i#S/iST,e;T/cS,a#S/i,e;T/c,a#S/$ca;T/$ca");
+		assertEquals("S;iST;iiSTT;iiTT;iiaT;iiacS;iiac", cfgLl1Parser.parse("iiac"));
+	}
+
+	@Test
 	public void testCfg1String1() {
-		CfgLl1Parser cfgLl1Parser= new CfgLl1Parser("S;Z;R;O;Y#b;k;l;m;q;s;t#S/sS,lR;Z/bR,OlOY,sRlY;R/m,tOl,e;O/mYs,kRl,e;Y/sS,lZqY#S/s,l;Z/b,klm,s;R/m,t,e;O/m,k,e;Y/s,l#S/$qs;Z/q;R/$lqs;O/l;Y/qs");
+		CfgLl1Parser cfgLl1Parser= new CfgLl1Parser("S;Z;R;O;Y#b;k;l;m;q;s;t#S/sS,lR;Z/bR,OlOY,sRlY;R/m,tOl,e;O/mYs,kRl,e;Y/sS,lZqY#S/s,l;Z/b,k,l,m,s;R/m,t,e;O/m,k,e;Y/s,l#S/$qs;Z/q;R/$lqs;O/l;Y/qs");
 		assertEquals("S;lR;ltOl;ltmYsl;ltmlZqYsl;ltmlOlOYqYsl;ltmllOYqYsl;ltmllmYsYqYsl;ERROR", cfgLl1Parser.parse("ltmllmm"));
 	}
 
 	@Test
 	public void testCfg1String2() {
-		CfgLl1Parser cfgLl1Parser= new CfgLl1Parser("S;Z;R;O;Y#b;k;l;m;q;s;t#S/sS,lR;Z/bR,OlOY,sRlY;R/m,tOl,e;O/mYs,kRl,e;Y/sS,lZqY#S/s,l;Z/b,klm,s;R/m,t,e;O/m,k,e;Y/s,l#S/$qs;Z/q;R/$lqs;O/l;Y/qs");
+		CfgLl1Parser cfgLl1Parser= new CfgLl1Parser("S;Z;R;O;Y#b;k;l;m;q;s;t#S/sS,lR;Z/bR,OlOY,sRlY;R/m,tOl,e;O/mYs,kRl,e;Y/sS,lZqY#S/s,l;Z/b,k,l,m,s;R/m,t,e;O/m,k,e;Y/s,l#S/$qs;Z/q;R/$lqs;O/l;Y/qs");
 		assertEquals("S;lR;ltOl;ltmYsl;ltmsSsl;ltmssSsl;ltmsslRsl;ltmsslsl;ERROR", cfgLl1Parser.parse("ltmssllb"));
 	}
 
 	@Test
 	public void testCfg1String3() {
-		CfgLl1Parser cfgLl1Parser= new CfgLl1Parser("S;Z;R;O;Y#b;k;l;m;q;s;t#S/sS,lR;Z/bR,OlOY,sRlY;R/m,tOl,e;O/mYs,kRl,e;Y/sS,lZqY#S/s,l;Z/b,klm,s;R/m,t,e;O/m,k,e;Y/s,l#S/$qs;Z/q;R/$lqs;O/l;Y/qs");
+		CfgLl1Parser cfgLl1Parser= new CfgLl1Parser("S;Z;R;O;Y#b;k;l;m;q;s;t#S/sS,lR;Z/bR,OlOY,sRlY;R/m,tOl,e;O/mYs,kRl,e;Y/sS,lZqY#S/s,l;Z/b,k,l,m,s;R/m,t,e;O/m,k,e;Y/s,l#S/$qs;Z/q;R/$lqs;O/l;Y/qs");
 		assertEquals("S;lR;ltOl;ltmYsl;ltmlZqYsl;ltmlsRlYqYsl;ltmlstOllYqYsl;ltmlstllYqYsl;ERROR", cfgLl1Parser.parse("ltmlstll"));
 	}
 
 	@Test
 	public void testCfg1String4() {
-		CfgLl1Parser cfgLl1Parser= new CfgLl1Parser("S;Z;R;O;Y#b;k;l;m;q;s;t#S/sS,lR;Z/bR,OlOY,sRlY;R/m,tOl,e;O/mYs,kRl,e;Y/sS,lZqY#S/s,l;Z/b,klm,s;R/m,t,e;O/m,k,e;Y/s,l#S/$qs;Z/q;R/$lqs;O/l;Y/qs");
+		CfgLl1Parser cfgLl1Parser= new CfgLl1Parser("S;Z;R;O;Y#b;k;l;m;q;s;t#S/sS,lR;Z/bR,OlOY,sRlY;R/m,tOl,e;O/mYs,kRl,e;Y/sS,lZqY#S/s,l;Z/b,k,l,m,s;R/m,t,e;O/m,k,e;Y/s,l#S/$qs;Z/q;R/$lqs;O/l;Y/qs");
 		assertEquals("S;sS;slR;sltOl;sltmYsl;sltmlZqYsl;sltmlbRqYsl;sltmlbqYsl;ERROR", cfgLl1Parser.parse("sltmlbqm"));
 	}
 
 	@Test
 	public void testCfg1String5() {
-		CfgLl1Parser cfgLl1Parser= new CfgLl1Parser("S;Z;R;O;Y#b;k;l;m;q;s;t#S/sS,lR;Z/bR,OlOY,sRlY;R/m,tOl,e;O/mYs,kRl,e;Y/sS,lZqY#S/s,l;Z/b,klm,s;R/m,t,e;O/m,k,e;Y/s,l#S/$qs;Z/q;R/$lqs;O/l;Y/qs");
+		CfgLl1Parser cfgLl1Parser= new CfgLl1Parser("S;Z;R;O;Y#b;k;l;m;q;s;t#S/sS,lR;Z/bR,OlOY,sRlY;R/m,tOl,e;O/mYs,kRl,e;Y/sS,lZqY#S/s,l;Z/b,k,l,m,s;R/m,t,e;O/m,k,e;Y/s,l#S/$qs;Z/q;R/$lqs;O/l;Y/qs");
 		assertEquals("S;lR;ltOl;ltmYsl;ltmlZqYsl;ltmlbRqYsl;ltmlbqYsl;ltmlbqsSsl;ltmlbqslRsl;ltmlbqslsl", cfgLl1Parser.parse("ltmlbqslsl"));
 	}
 
