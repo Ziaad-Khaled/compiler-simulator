@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * Write your info here
  * 
- * @name Jane Smith
- * @id 46-0234
- * @labNumber 07
+ * @name Ziad Khaled Naif
+ * @id 46-20280
+ * @labNumber 22
  */
 
 public class CfgFirstFollow {
@@ -297,12 +297,22 @@ class Variable {
 	}
 
 	private boolean assignFollowHelperSecondCase(String rule) {
-		boolean change = true;
-		Character lastCharacter = rule.charAt(rule.length()-1);
-		if(Character.isLowerCase(lastCharacter))
-			return false;
-		Variable variable = cfgFirstFollow.getVariableByName(lastCharacter);
-		return variable.addFollowCharacter(this.follow);
+		boolean change = false;
+		for(int i=rule.length()-1; i>=0;i--)
+		{
+			Character lastCharacter = rule.charAt(i);
+			if(Character.isLowerCase(lastCharacter))
+				break;
+			Variable variable = cfgFirstFollow.getVariableByName(lastCharacter);
+			boolean newChange = variable.addFollowCharacter(this.follow);
+			if(!change)
+				change = newChange;
+
+			boolean variableGoesToEpsilon = variable.first.contains('e');
+			if(!variableGoesToEpsilon)
+				break;
+		}
+		return change;
 	}
 
 	public ArrayList<Character> firstHelper(Character character)
