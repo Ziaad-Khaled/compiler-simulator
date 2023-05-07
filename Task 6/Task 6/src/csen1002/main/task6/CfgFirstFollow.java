@@ -10,7 +10,7 @@ import java.util.List;
  * 
  * @name Ziad Khaled Naif
  * @id 46-20280
- * @labNumber 22
+ * @labNumber 23
  */
 
 public class CfgFirstFollow {

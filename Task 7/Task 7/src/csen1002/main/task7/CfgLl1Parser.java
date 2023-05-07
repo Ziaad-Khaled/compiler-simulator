@@ -1,6 +1,7 @@
 package csen1002.main.task7;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -9,7 +10,7 @@ import java.util.Stack;
  * 
  * @name Ziad Khaled Naif
  * @id 46-20280
- * @labNumber 22
+ * @labNumber 23
  */
 
 public class CfgLl1Parser {
@@ -281,3 +282,233 @@ public class CfgLl1Parser {
 	}
 
 }
+
+class ParsingTable {
+	CfgLl1Parser cfgLl1Parser;
+	List<Variable> variables;
+	List<Character> terminals;
+	int[][] parsingTable;
+
+	public ParsingTable(CfgLl1Parser cfgLl1Parser, List<Variable> variables, List<Character> terminals) {
+		this.cfgLl1Parser = cfgLl1Parser;
+		this.variables = variables;
+		this.terminals = terminals;
+		this.terminals.add('$');
+		int numberOfVariables = this.variables.size();
+		int numberOfTerminals = this.terminals.size();
+		this.parsingTable = new int[numberOfVariables][numberOfTerminals];
+		initializeParsingTableValues();
+		assignValuesToParsingTable();
+	}
+
+	private void initializeParsingTableValues() {
+		for(int i=0;i<parsingTable.length;i++)
+		{
+			for(int j=0;j<parsingTable[0].length;j++)
+			{
+				parsingTable[i][j] = -1;
+			}
+		}
+	}
+
+
+	private void assignValuesToParsingTable() {
+		for(int i=0;i<parsingTable.length;i++)
+		{
+			Variable variable = this.variables.get(i);
+			ArrayList<String> rules = variable.getRules();
+			if(rules.contains("e"))
+				assignValuesToParsingTableUsingFollow(variable, rules.indexOf("e"));
+			List<Character> first = variable.getFirst();
+			assignRulesForFirst(variable, first);
+		}
+	}
+
+	private void assignRulesForFirst(Variable variable, List<Character> first) {
+		int variableIndex = variables.indexOf(variable);
+
+		for(int i=0;i<first.size();i++)
+		{
+			Character terminal = first.get(i);
+			int terminalIndex = terminals.indexOf(terminal);
+			int rule = getTheRuleForTheTerminal(variable, terminal);
+			if(terminal != 'e')
+				parsingTable[variableIndex][terminalIndex] = rule;
+		}
+	}
+
+
+	private int getTheRuleForTheTerminal(Variable variable, Character terminal) {
+		ArrayList<String> rules = variable.getRules();
+		for (int i=0;i<rules.size();i++)
+		{
+			String rule = rules.get(i);
+			List<Character> firstOfTheRule = computerFirstOfTheRule(rule);
+			if(firstOfTheRule.contains(terminal))
+				return i;
+		}
+		return -1;
+	}
+
+	private List<Character> computerFirstOfTheRule(String rule) {
+		List<Character> first = new ArrayList<>();
+		for(int i=0;i<rule.length();i++)
+		{
+			Character character = rule.charAt(i);
+			if(Character.isLowerCase(character))
+			{
+				first.add(character);
+				break;
+			}
+			else
+			{
+				Variable variable = cfgLl1Parser.getVariableByName(character);
+				List<Character> variableFirst = variable.getFirst();
+				first.addAll(variableFirst);
+				List<String> variableRules = variable.getRules();
+				if(!variableRules.contains("e"))
+					break;
+			}
+		}
+		return first;
+	}
+
+	private void assignValuesToParsingTableUsingFollow(Variable variable, int epsilonIndex) {
+		int variableIndex = variables.indexOf(variable);
+		List<Character> follow = variable.getFollow();
+		for(int j=0;j<this.terminals.size();j++)
+		{
+			Character terminal = this.terminals.get(j);
+
+			if(follow.contains(terminal))
+			{
+				this.parsingTable[variableIndex][j] = epsilonIndex;
+			}
+		}
+	}
+
+
+	public void printParsingTable()
+	{
+		System.out.print(" ");
+		for (int i=0;i<terminals.size();i++)
+		{
+			System.out.print(" | ");
+			System.out.print(terminals.get(i));
+		}
+		System.out.println();
+		for(int i=0;i<parsingTable.length;i++)
+		{
+			Character variableName = this.variables.get(i).getName();
+			System.out.print(variableName);
+			for (int j=0;j<parsingTable[i].length;j++)
+			{
+				if(parsingTable[i][j] < 0)
+					System.out.print(" |");
+				else
+					System.out.print(" | ");
+				System.out.print(parsingTable[i][j]);
+			}
+			System.out.println();
+		}
+	}
+
+	public String getRule(Variable variable, Character terminal) {
+		int variableIndex = this.variables.indexOf(variable);
+		int terminalIndex = this.terminals.indexOf(terminal);
+		int ruleIndex = this.parsingTable[variableIndex][terminalIndex];
+		ArrayList<String> rules = variable.getRules();
+		if(ruleIndex < 0)
+			return null;
+		String rule = rules.get(ruleIndex);
+		return rule;
+	}
+}
+
+class Variable {
+
+	private CfgLl1Parser cfgLl1Parser;
+	private Character name;
+	private ArrayList<String> rules;
+	private List<Character> first;
+	private List<Character> follow;
+
+	public Variable(CfgLl1Parser cfgLl1Parser, Character name)
+	{
+		this.cfgLl1Parser = cfgLl1Parser;
+		this.name = name;
+		this.rules = new ArrayList<>();
+		this.first = new ArrayList<>();
+		this.follow = new ArrayList<>();
+	}
+
+	public void addRule(String rule)
+	{
+		rules.add(rule);
+	}
+	public void addFirst(char character)
+	{
+		first.add(character);
+	}
+
+	public void addFollow(char character)
+	{
+		follow.add(character);
+	}
+
+	public List<Character> getFirst()
+	{
+		return this.first;
+	}
+	public List<Character> getFollow()
+	{
+		return this.follow;
+	}
+
+	public Character getName() {
+		return name;
+	}
+
+	public ArrayList<String> getRules() {
+		return rules;
+	}
+
+	public String firstToString()
+	{
+		String output = "";
+		ArrayList<Character> first_arr = new ArrayList<Character>(first);
+		Collections.sort(first_arr);
+		for(int i=0;i<first.size();i++)
+		{
+			output += first_arr.get(i);
+		}
+		return output;
+	}
+
+	public String followToString() {
+		String output = "";
+		ArrayList<Character> follow_arr = new ArrayList<Character>(follow);
+		Collections.sort(follow_arr);
+		for(int i=0;i<follow.size();i++)
+		{
+			output += follow_arr.get(i);
+		}
+		return output;
+	}
+
+	@Override
+	public String toString() {
+		String output = name + "";
+		output += "/";
+		for(int i=0;i<rules.size();i++)
+		{
+			output+= rules.get(i);
+			output += ",";
+		}
+		if(output.charAt(output.length()-1) == '/')
+			output += "/";
+		return  output.substring(0, output.length()-1);
+	}
+
+}
+
