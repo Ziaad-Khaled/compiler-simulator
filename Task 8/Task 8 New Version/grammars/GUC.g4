@@ -1,0 +1,14 @@
+grammar GUC;
+start: (E_MAIL | ID)+ EOF;
+E_MAIL: USERNAME '@' (SUBDOMAIN '.')? DOMAIN;
+ID: BATCH '-' APPNUMBER;
+WS: [ \r\t\n]+ -> skip;
+fragment USERNAME: [A-Za-z-]+ '.' [A-Za-z-]+ ;
+fragment SUBDOMAIN: STUDENT | BERLIN;
+fragment STUDENT options { caseInsensitive=true; }:'student';
+fragment BERLIN options { caseInsensitive=true; }: 'Berlin';
+fragment DOMAIN : [Gg][Uu][Cc]'.'[Ee][Dd][Uu]'.'[Ee][Gg];
+fragment BATCH: NONZERO? DIGIT;
+fragment APPNUMBER: NONZERO? DIGIT DIGIT DIGIT DIGIT;
+fragment NONZERO: [1-9];
+fragment DIGIT: [0-9];

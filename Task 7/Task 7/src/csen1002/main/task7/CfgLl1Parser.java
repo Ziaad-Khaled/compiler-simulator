@@ -90,8 +90,10 @@ public class CfgLl1Parser {
 			String[] firsts = variableToFirst[1].split(",");
 			for(int j=0; j< firsts.length;j++)
 			{
-				Character first = firsts[j].charAt(0);
-				variable.addFirst(first);
+				for(int k=0;k< firsts[j].length();k++) {
+					Character first = firsts[j].charAt(k);
+					variable.addFirst(first);
+				}
 			}
 		}
 	}
@@ -191,6 +193,11 @@ public class CfgLl1Parser {
 	}
 
 	private Stack<Character> changePdaStack(Stack<Character> pdaStack, Character inputPeek) {
+		if(pdaStack.isEmpty())
+		{
+			error = true;
+			 return null;
+		}
 		Character pdaPeek = pdaStack.peek();
 		if(Character.isLowerCase(pdaPeek))
 		{
