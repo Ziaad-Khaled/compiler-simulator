@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CfgLeftRecElim {
 
-	List<Variable> variables;
+	List<LeftRecVariable> leftRecVariables;
 	List<Character> terminals;
 
 	/**
@@ -23,13 +23,13 @@ public class CfgLeftRecElim {
 	}
 
 	private void parseVariables(String part) {
-		this.variables = new ArrayList<>();
+		this.leftRecVariables = new ArrayList<>();
 		String[] variables_arr = part.split(";");
 		for(int i=0;i<variables_arr.length;i++)
 		{
 			Character name = variables_arr[i].charAt(0);
-			Variable variable = new Variable(this, name);
-			this.variables.add(variable);
+			LeftRecVariable leftRecVariable = new LeftRecVariable(this, name);
+			this.leftRecVariables.add(leftRecVariable);
 		}
 	}
 
@@ -49,12 +49,12 @@ public class CfgLeftRecElim {
 		{
 			String[] rulesForAVariable = rules[i].split("/");
 			Character variable_name = rulesForAVariable[0].charAt(0);
-			Variable variable = getVariableByName(variable_name);
+			LeftRecVariable leftRecVariable = getVariableByName(variable_name);
 			String[] rightHandSide = rulesForAVariable[1].split(",");
 			for(int j=0; j< rightHandSide.length;j++)
 			{
 				String rule = rightHandSide[j];
-				variable.addRule(rule);
+				leftRecVariable.addRule(rule);
 			}
 		}
 	}
@@ -64,31 +64,31 @@ public class CfgLeftRecElim {
 	 */
 	public void eliminateLeftRecursion() {
 		ArrayList<Character> eliminatedProductionVariables = new ArrayList<>();
-		int variablesSize = variables.size();
+		int variablesSize = leftRecVariables.size();
 		for(int i=0;i<variablesSize;i++)
 		{
-			Variable variable = variables.get(i);
-			variable.eliminateLeftRecursion(eliminatedProductionVariables);
-			eliminatedProductionVariables.add(variable.getName());
+			LeftRecVariable leftRecVariable = leftRecVariables.get(i);
+			leftRecVariable.eliminateLeftRecursion(eliminatedProductionVariables);
+			eliminatedProductionVariables.add(leftRecVariable.getName());
 		}
 	}
 
-	public Variable getVariableByName(Character character)
+	public LeftRecVariable getVariableByName(Character character)
 	{
-		for(int i=0;i<variables.size();i++)
+		for(int i = 0; i< leftRecVariables.size(); i++)
 		{
-			if(variables.get(i).getName().equals(character))
+			if(leftRecVariables.get(i).getName().equals(character))
 			{
-				return variables.get(i);
+				return leftRecVariables.get(i);
 			}
 		}
 
 		return null;
 	}
 
-	public void addVaribale(Variable variable)
+	public void addVaribale(LeftRecVariable leftRecVariable)
 	{
-		variables.add(variable);
+		leftRecVariables.add(leftRecVariable);
 	}
 
 	@Override
@@ -98,11 +98,11 @@ public class CfgLeftRecElim {
 
 	private String variablesToString() {
 		String output = "";
-		for(int i=0;i<variables.size();i++)
+		for(int i = 0; i< leftRecVariables.size(); i++)
 		{
-			Variable variable = variables.get(i);
-			output+=variable.getName();
-			if(variable.isName_bar())
+			LeftRecVariable leftRecVariable = leftRecVariables.get(i);
+			output+= leftRecVariable.getName();
+			if(leftRecVariable.isName_bar())
 				output+= "'";
 			output += ";";
 		}
@@ -121,9 +121,9 @@ public class CfgLeftRecElim {
 	private String rulesToString()
 	{
 		String output = "";
-		for(int i=0;i< variables.size();i++)
+		for(int i = 0; i< leftRecVariables.size(); i++)
 		{
-			Variable value = variables.get(i);
+			LeftRecVariable value = leftRecVariables.get(i);
 			output+= value.toString();
 			output += ";";
 		}
@@ -132,14 +132,14 @@ public class CfgLeftRecElim {
 
 }
 
-class Variable {
+class LeftRecVariable {
 	private CfgLeftRecElim cfgLeftRecElim;
 	private Character name;
 	private boolean name_bar;
 	private ArrayList<String> rules;
 	private ArrayList<String> alphas;
 	private ArrayList<String> betas;
-	public Variable(CfgLeftRecElim cfgLeftRecElim, Character name)
+	public LeftRecVariable(CfgLeftRecElim cfgLeftRecElim, Character name)
 	{
 		this.cfgLeftRecElim = cfgLeftRecElim;
 		this.name = name;
@@ -182,8 +182,8 @@ class Variable {
 	private void eliminateProductionRule(String element) {
 		int index = rules.indexOf(element);
 		rules.remove(element);
-		Variable productionVariable = cfgLeftRecElim.getVariableByName(element.charAt(0));
-		ArrayList<String> productionVariableRules = productionVariable.getRules();
+		LeftRecVariable productionLeftRecVariable = cfgLeftRecElim.getVariableByName(element.charAt(0));
+		ArrayList<String> productionVariableRules = productionLeftRecVariable.getRules();
 		String restOfTheString = element.substring(1);
 		for (String rule : productionVariableRules) {
 			String newRule = rule + restOfTheString;
@@ -218,16 +218,16 @@ class Variable {
 	}
 
 	private void createNewVariable() {
-		Variable newVariable = new Variable(this.cfgLeftRecElim, this.name);
-		newVariable.setName_bar(true);
+		LeftRecVariable newLeftRecVariable = new LeftRecVariable(this.cfgLeftRecElim, this.name);
+		newLeftRecVariable.setName_bar(true);
 		for (String alpha : alphas) {
 			String newRule = alpha;
 			newRule += name;
 			newRule += "'";
-			newVariable.addRule(newRule);
+			newLeftRecVariable.addRule(newRule);
 		}
-		newVariable.addRule("e");
-		this.cfgLeftRecElim.addVaribale(newVariable);
+		newLeftRecVariable.addRule("e");
+		this.cfgLeftRecElim.addVaribale(newLeftRecVariable);
 	}
 
 
