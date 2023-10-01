@@ -1,11 +1,10 @@
 package main.compiler;
 
 import java.util.*;
-import main.shared.*;
 
 public class CfgEpsUnitElim {
 
-	List<Variable> variables;
+	List<CfgVariable> cfgVariables;
 	List<Character> terminals;
 
 	/**
@@ -22,13 +21,13 @@ public class CfgEpsUnitElim {
 	}
 
 	private void parseVariables(String part) {
-		this.variables = new ArrayList<>();
+		this.cfgVariables = new ArrayList<>();
 		String[] variables_arr = part.split(";");
 		for(int i=0;i<variables_arr.length;i++)
 		{
 			Character name = variables_arr[i].charAt(0);
-			Variable variable = new Variable(this, name);
-			this.variables.add(variable);
+			CfgVariable cfgVariable = new CfgVariable(this, name);
+			this.cfgVariables.add(cfgVariable);
 		}
 	}
 
@@ -48,12 +47,12 @@ public class CfgEpsUnitElim {
 		{
 			String[] rulesForAVariable = rules[i].split("/");
 			Character variable_name = rulesForAVariable[0].charAt(0);
-			Variable variable = getVariableByName(variable_name);
+			CfgVariable cfgVariable = getVariableByName(variable_name);
 			String[] rightHandSide = rulesForAVariable[1].split(",");
 			for(int j=0; j< rightHandSide.length;j++)
 			{
 				String rule = rightHandSide[j];
-				variable.addRule(rule);
+				cfgVariable.addRule(rule);
 			}
 		}
 	}
@@ -71,12 +70,12 @@ public class CfgEpsUnitElim {
 
 	private Boolean eliminateEpsilonRulesHelper() {
 		boolean changed = false;
-		for(int i= variables.size() - 1; i>= 0; i--)
+		for(int i = cfgVariables.size() - 1; i>= 0; i--)
 		{
-			Variable variable = variables.get(i);
-			if(variable.hasEpsilon())
+			CfgVariable cfgVariable = cfgVariables.get(i);
+			if(cfgVariable.hasEpsilon())
 			{
-				removeEpsilon(variable);
+				removeEpsilon(cfgVariable);
 				changed = true;
 			}
 
@@ -84,13 +83,13 @@ public class CfgEpsUnitElim {
 		return changed;
 	}
 
-	private void removeEpsilon(Variable variable) {
-		variable.removeEpsilon();
-		Character variableName = variable.getName();
-		for(int i=0; i<variables.size();i++)
+	private void removeEpsilon(CfgVariable cfgVariable) {
+		cfgVariable.removeEpsilon();
+		Character variableName = cfgVariable.getName();
+		for(int i = 0; i< cfgVariables.size(); i++)
 		{
-			Variable targetVariable = variables.get(i);
-			targetVariable.substituteEpsilon(variableName);
+			CfgVariable targetCfgVariable = cfgVariables.get(i);
+			targetCfgVariable.substituteEpsilon(variableName);
 		}
 	}
 
@@ -99,21 +98,21 @@ public class CfgEpsUnitElim {
 	 */
 	public void eliminateUnitRules() {
 		// TODO Auto-generated method stub
-		for(int i= variables.size() - 1; i>= 0; i--)
+		for(int i = cfgVariables.size() - 1; i>= 0; i--)
 		{
-			Variable variable = variables.get(i);
-			variable.eliminateUnitRules();
+			CfgVariable cfgVariable = cfgVariables.get(i);
+			cfgVariable.eliminateUnitRules();
 		}
 	}
 
 
-	public Variable getVariableByName(Character character)
+	public CfgVariable getVariableByName(Character character)
 	{
-		for(int i=0;i<variables.size();i++)
+		for(int i = 0; i< cfgVariables.size(); i++)
 		{
-			if(variables.get(i).getName().equals(character))
+			if(cfgVariables.get(i).getName().equals(character))
 			{
-				return variables.get(i);
+				return cfgVariables.get(i);
 			}
 		}
 
@@ -131,9 +130,9 @@ public class CfgEpsUnitElim {
 
 	private String variablesToString() {
 		String output = "";
-		for(int i=0;i<variables.size();i++)
+		for(int i = 0; i< cfgVariables.size(); i++)
 		{
-			output+=variables.get(i).getName()+ ";";
+			output+= cfgVariables.get(i).getName()+ ";";
 		}
 		return output.substring(0, output.length() - 1);
 	}
@@ -150,13 +149,163 @@ public class CfgEpsUnitElim {
 	private String rulesToString()
 	{
 		String output = "";
-		for(int i=0;i< variables.size();i++)
+		for(int i = 0; i< cfgVariables.size(); i++)
 		{
-			Variable value = variables.get(i);
+			CfgVariable value = cfgVariables.get(i);
 			output+= value.toString();
 			output += ";";
 		}
 		return output.substring(0, output.length() - 1);
 	}
 
+}
+
+class CfgVariable {
+	private CfgEpsUnitElim cfgEpsUnitElim;
+	private Character name;
+	private HashSet<String> rules;
+	private boolean hasEpsilon;
+	private boolean hadEpsilon;
+	private HashSet<Character> eliminatedUnitRules;
+	public CfgVariable(CfgEpsUnitElim cfgEpsUnitElim, Character name)
+	{
+		this.cfgEpsUnitElim = cfgEpsUnitElim;
+		this.name = name;
+		this.rules = new HashSet<>();
+		hasEpsilon = false;
+		hadEpsilon = false;
+		eliminatedUnitRules = new HashSet<>();
+	}
+
+	public void addRule(String rule)
+	{
+		rules.add(rule);
+		if(rule.charAt(0) == 'e')
+			addEpsilon();
+	}
+
+	public void substituteEpsilon(Character variable)
+	{
+		String[] rules_arr = new String[rules.size()];
+		rules.toArray(rules_arr);
+
+		for (String element : rules_arr) {
+			substituteEpsilonHelper(element, variable);
+		}
+	}
+
+	private void substituteEpsilonHelper(String str, Character variable)
+	{
+		for(int i=0;i<str.length();i++)
+		{
+			if(str.charAt(i) == variable)
+			{
+				String newString = str.substring(0, i) + str.substring(i + 1);
+				if(!newString.equals(""))
+				{
+					rules.add(newString);
+					substituteEpsilonHelper(newString, variable);
+				}
+				else
+				{
+					addEpsilon();
+				}
+			}
+		}
+	}
+
+	public void eliminateUnitRules()
+	{
+		boolean changed = true;
+		while (changed)
+		{
+			changed = eliminateUnitRulesHelper();
+		}
+	}
+
+	private boolean eliminateUnitRulesHelper()
+	{
+		boolean changed = false;
+		String[] rules_arr = new String[rules.size()];
+		rules.toArray(rules_arr);
+
+		for (String variableName : rules_arr) {
+			if(isUnit(variableName))
+			{
+				changed = true;
+				eliminateOneUnitRule(variableName);
+			}
+		}
+
+		return changed;
+	}
+
+	private void eliminateOneUnitRule(String variableName)
+	{
+		rules.remove(variableName);
+		eliminatedUnitRules.add(variableName.charAt(0));
+		CfgVariable cfgVariable = cfgEpsUnitElim.getVariableByName(variableName.charAt(0));
+		HashSet<String> newRules = cfgVariable.getRules();
+		rules.addAll(newRules);
+		checkIfContainsElimintatedUnitRule();
+	}
+
+	private void checkIfContainsElimintatedUnitRule() {
+		for(Character unitRule: eliminatedUnitRules)
+		{
+			if(rules.contains(unitRule.toString()))
+			{
+				rules.remove(unitRule.toString());
+			}
+		}
+	}
+
+	public void removeEpsilon()
+	{
+		rules.remove("e");
+		hasEpsilon = false;
+	}
+
+	private void addEpsilon() {
+		if(!hadEpsilon)
+		{
+			hasEpsilon = true;
+			hadEpsilon = true;
+			rules.add("e");
+		}
+	}
+
+	private boolean isUnit(String str)
+	{
+		return str.matches("^[A-Z]$");
+	}
+
+	public Character getName() {
+		return name;
+	}
+
+	public HashSet<String> getRules() {
+		return rules;
+	}
+
+	public boolean hasEpsilon() {
+		return hasEpsilon;
+	}
+
+	@Override
+	public String toString() {
+		String output = name + "/";
+		List<String> rules_arr = new ArrayList<>(rules);
+		Collections.sort(rules_arr);
+		for(int i=0;i<rules_arr.size();i++)
+		{
+			output+= rules_arr.get(i);
+			output += ",";
+		}
+
+		if(output.charAt(output.length()-1) == '/')
+			output += "/";
+
+		return  output.substring(0, output.length()-1);
+	}
 }
